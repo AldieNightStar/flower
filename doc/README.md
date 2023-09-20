@@ -8,3 +8,4 @@
 * `array` - Array of data
 * `dict` - Dictionary
 * `func` - Function
+* `atom` - Atom Value (String alternative). Used for calls and other programming stuff

@@ -25,13 +25,13 @@ func (this *ExactValue) String() string {
 // Number values
 // =====================
 
-func NewFloatValue(num float64) Value {
+func NewFloatValue(num float64) *ExactValue {
 	return &ExactValue{
 		Value: num,
 	}
 }
 
-func NewIntValue(num int64) Value {
+func NewIntValue(num int64) *ExactValue {
 	return &ExactValue{
 		Value: num,
 	}
@@ -65,7 +65,7 @@ func GetFloatValue(v Value) (ok bool, r float64) {
 // String values
 // =====================
 
-func NewStringValue(s string) Value {
+func NewStringValue(s string) *ExactValue {
 	return &ExactValue{
 		Value: s,
 	}
@@ -87,7 +87,7 @@ func GetStringValue(v Value) (ok bool, r string) {
 // Array values
 // =====================
 
-func NewArrayValue() Value {
+func NewArrayValue() *ExactValue {
 	return &ExactValue{
 		Value: make([]Value, 0, 8),
 	}
@@ -141,14 +141,92 @@ func IsNoneValue(v Value) bool {
 // Func Value
 // =====================
 
+type FuncType func(env *Env, args []Value) (Value, error)
+
 type FuncValue struct {
-	Func func(args []Value) Value
+	Func FuncType
 }
 
 func (this *FuncValue) String() string {
 	return "FUNC"
 }
 
-func NewFuncValue(f func(args []Value) Value) Value {
+func GetFuncValue(v Value) (ok bool, f *FuncValue) {
+	fun, isFunc := v.(*FuncValue)
+	if !isFunc {
+		return false, nil
+	}
+	return true, fun
+}
+
+func NewFuncValue(f FuncType) *FuncValue {
 	return &FuncValue{f}
+}
+
+// =====================
+// Atom Value
+// =====================
+
+type AtomValue struct {
+	Atom string
+}
+
+func (this *AtomValue) String() string {
+	return ":" + this.Atom
+}
+
+func NewAtomValue(atom string) *AtomValue {
+	return &AtomValue{atom}
+}
+
+func GetAtomValue(v Value) (ok bool, a string) {
+	atom, isAtom := v.(*AtomValue)
+	if !isAtom {
+		return false, ""
+	}
+	return true, atom.Atom
+}
+
+// =====================
+// Expression Value
+// =====================
+
+type ExpValue struct {
+	Args []Value
+}
+
+func (this *ExpValue) String() string {
+	if len(this.Args) < 1 {
+		return "()"
+	} else {
+		return "EXP(" + this.Args[0].String() + " ...)"
+	}
+}
+
+func (this *ExpValue) Head() Value {
+	if len(this.Args) < 1 {
+		return VALUE_NONE
+	} else {
+		return this.Args[0]
+	}
+}
+
+func (this *ExpValue) Tail() []Value {
+	if len(this.Args) < 1 {
+		return []Value{}
+	} else {
+		return this.Args[1:]
+	}
+}
+
+func GetExpValue(v Value) (ok bool, e *ExpValue) {
+	exp, isExp := v.(*ExpValue)
+	if !isExp {
+		return false, nil
+	}
+	return true, exp
+}
+
+func NewExpValue(args []Value) *ExpValue {
+	return &ExpValue{args}
 }
