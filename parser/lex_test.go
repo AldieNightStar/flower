@@ -12,6 +12,21 @@ func TestLexWord(t *testing.T) {
 	if w != "" {
 		t.Fatalf("Wrong! Should be empty: %s", w)
 	}
+
+	w = lexWord("a_b_c+")
+	if w != "a_b_c" {
+		t.Fatalf("Wrong: %s", w)
+	}
+
+	w = lexWord("tell-me!")
+	if w != "tell-me" {
+		t.Fatalf("Wrong: %s", w)
+	}
+
+	w = lexWord("-minus")
+	if w != "" {
+		t.Fatal("Should be empty")
+	}
 }
 
 func TestLexDigits(t *testing.T) {
@@ -42,6 +57,11 @@ func TestLexSymbols(t *testing.T) {
 		t.Fatalf("Not correct: %s", s)
 	}
 
+	s = lexSymbols("!**abc")
+	if s != "!**" {
+		t.Fatalf("Should be !**: %s", s)
+	}
+
 	s = lexSymbols(" 1")
 	if s != "" {
 		t.Fatalf("Should be empty: %s", s)
@@ -57,5 +77,102 @@ func TestLexBracket(t *testing.T) {
 	b = lexBracket(" [ )(")
 	if b != "" {
 		t.Fatalf("Should be empty: %s", b)
+	}
+}
+
+func TestLexSpaces(t *testing.T) {
+	s := lexSpaces("  \t\n1 ")
+	if s != "  \t\n" {
+		t.Fatalf("Not correct: %s.", s)
+	}
+
+	if lexSpaces("1") != "" {
+		t.Fatal("Should be empty")
+	}
+
+	if takeEols(s) != 1 {
+		t.Fatalf("Should be 1 eol: %d", takeEols(s))
+	}
+}
+
+func TestLexString(t *testing.T) {
+	s := lexString("'test' 1")
+	if s != "'test'" {
+		t.Fatalf("Wrong: %s", s)
+	}
+
+	s = lexString("'take\\'me'@@")
+	if s != "'take\\'me'" {
+		t.Fatalf("Wrong: %s", s)
+	}
+
+	if lexString("1 'a'") != "" {
+		t.Fatal("Should be empty")
+	}
+
+	s = lexString("\"1\\\"\"")
+	if s != "\"1\\\"\"" {
+		t.Fatalf("Wrong: %s", s)
+	}
+}
+
+func TestLexColonString(t *testing.T) {
+	s := lexColonString(":hello 1")
+	if s != ":hello" {
+		t.Fatalf("Wrong: %s", s)
+	}
+
+	s = lexColonString(": 1")
+	if s != "" {
+		t.Fatalf("Should be empty: %s", s)
+	}
+
+	s = lexColonString(":a 1")
+	if s != ":a" {
+		t.Fatalf("Should be :a : %s", s)
+	}
+
+	s = lexColonString(" :1 2 3")
+	if s != "" {
+		t.Fatal("Should be empty")
+	}
+}
+
+func TestLexComment(t *testing.T) {
+	c := lexCommentString("; until end\n1")
+	if c != "; until end\n" {
+		t.Fatalf("Not correct: %s", c)
+	}
+
+	c = lexCommentString(";\n")
+	if c != ";\n" {
+		t.Fatalf("Not correct: %s", c)
+	}
+
+	c = lexCommentString("123")
+	if c != "" {
+		t.Fatal("Should be empty")
+	}
+}
+
+func TestPathString(t *testing.T) {
+	p := lexPathString("a.b.c")
+	if p != "a.b.c" {
+		t.Fatalf("Not correct: %s", p)
+	}
+
+	p = lexPathString("a.c==")
+	if p != "a.c" {
+		t.Fatalf("Not correct: %s", p)
+	}
+
+	p = lexPathString("a. b. c")
+	if p != "" {
+		t.Fatalf("Should be empty: %s", p)
+	}
+
+	p = lexPathString("no")
+	if p != "" {
+		t.Fatalf("Should be empty: %s", p)
 	}
 }

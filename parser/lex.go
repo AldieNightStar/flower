@@ -1,16 +1,36 @@
 package parser
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/AldieNightStar/flower/util"
+)
 
 var SPACES = " \t"
-var SYMBOLS = "~!@#%^&*_+-=[]{}<>';\":\\/`,.?"
+var EOL = "\n"
+var SPACES_EOL = SPACES + EOL
+var SYMBOLS = "~!@#$%^&*_+-=[]{}<>';\":\\/`,.?"
 var SPACES_SYMBOLS = SPACES + SYMBOLS
+var SPACES_SYMBOLS_BRACKETS = SPACES + SYMBOLS + "()"
 var DIGIT = "01234567890"
+var QUOTES = "\"'`"
 
 func lexWord(src string) string {
 	count := 0
 	for _, c := range src {
-		if strings.Contains(SPACES_SYMBOLS, string(c)) {
+		if c == '$' || c == '_' {
+			count += 1
+			continue
+		}
+		if c == '-' {
+			if count > 0 {
+				count += 1
+				continue
+			} else {
+				break
+			}
+		}
+		if strings.Contains(SPACES_SYMBOLS_BRACKETS, string(c)) {
 			break
 		}
 		count += 1
@@ -58,4 +78,104 @@ func lexBracket(src string) string {
 		return c
 	}
 	return ""
+}
+
+func lexSpaces(src string) string {
+	count := 0
+	for _, c := range src {
+		if !strings.Contains(SPACES_EOL, string(c)) {
+			break
+		}
+		count += 1
+	}
+	return src[0:count]
+}
+
+func takeEols(s string) int {
+	var eols = 0
+	for _, c := range s {
+		if c == '\n' {
+			eols += 1
+		}
+	}
+	return eols
+}
+
+func lexString(s string) string {
+	if !strings.Contains(QUOTES, s[0:1]) {
+		return ""
+	}
+	q := rune(s[0])
+	count := 1
+	escaped := false
+	for _, c := range s[1:] {
+		if escaped {
+			escaped = false
+			count += 1
+			continue
+		}
+		if c == '\\' {
+			escaped = true
+			count += 1
+			continue
+		}
+		if c == q {
+			count += 1
+			break
+		}
+		count += 1
+	}
+	return s[0:count]
+}
+
+func lexColonString(s string) string {
+	if s[0] != ':' {
+		return ""
+	}
+	count := 1 + len(lexWord(s[1:]))
+	if count < 2 {
+		return ""
+	}
+	return s[0:count]
+}
+
+func lexCommentString(s string) string {
+	if s[0] != ';' {
+		return ""
+	}
+	count := 1
+	for _, c := range s[1:] {
+		if c == '\n' {
+			count += 1
+			break
+		}
+		count += 1
+	}
+	return s[0:count]
+}
+
+func lexPathString(s string) string {
+	count := 0
+	delta := 0
+	for {
+		delta = len(lexWord(s[count:]))
+		if delta > 0 {
+			count += delta
+		}
+		if util.SliceOf(s, count, count+1) != "." {
+			break
+		} else {
+			count += 1
+		}
+	}
+	result := util.SliceOf(s, 0, count)
+	if strings.Count(result, ".") > 0 {
+		// If last dot is present then it's incorrect
+		if strings.LastIndex(result, ".") == len(result)-1 {
+			return ""
+		}
+		return result
+	} else {
+		return ""
+	}
 }
