@@ -27,4 +27,9 @@ func TestSliceOf(t *testing.T) {
 	if s != "" {
 		t.Fatalf("Should be empty: %s", s)
 	}
+
+	s = SliceOf("123", -4, 100)
+	if s != "123" {
+		t.Fatalf("Should be 123: %s", s)
+	}
 }
