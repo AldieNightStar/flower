@@ -15,8 +15,55 @@ var SPACES_SYMBOLS_BRACKETS = SPACES + SYMBOLS + "()"
 var DIGIT = "01234567890"
 var QUOTES = "\"'`"
 
-func lexOne(src string) {
+func lexOne(src string) *Token {
+	var res string
 
+	res = lexSpaces(src)
+	if len(res) > 0 {
+		return NewToken(TOK_SPACE, res)
+	}
+
+	res = lexDigits(src)
+	if len(res) > 0 {
+		return NewToken(TOK_NUMBER, res)
+	}
+
+	res = lexPathString(src)
+	if len(src) > 0 {
+		return NewToken(TOK_PATH, res)
+	}
+
+	res = lexWord(src)
+	if len(res) > 0 {
+		return NewToken(TOK_WORD, res)
+	}
+
+	res = lexString(src)
+	if len(res) > 0 {
+		return NewToken(TOK_STRING, res)
+	}
+
+	res = lexBracket(src)
+	if len(res) > 0 {
+		return NewToken(TOK_BRACKET, res)
+	}
+
+	res = lexColonString(src)
+	if len(res) > 0 {
+		return NewToken(TOK_ATOM, res)
+	}
+
+	res = lexCommentString(src)
+	if len(res) > 0 {
+		return NewToken(TOK_COMMENT, res)
+	}
+
+	res = lexSymbols(src)
+	if len(res) > 0 {
+		return NewToken(TOK_SYMBOLS, res)
+	}
+
+	return nil
 }
 
 func lexWord(src string) string {
