@@ -15,6 +15,10 @@ var SPACES_SYMBOLS_BRACKETS = SPACES + SYMBOLS + "()"
 var DIGIT = "01234567890"
 var QUOTES = "\"'`"
 
+func lexOne(src string) {
+
+}
+
 func lexWord(src string) string {
 	count := 0
 	for _, c := range src {
@@ -42,6 +46,13 @@ func lexDigits(src string) string {
 	count := 0
 	dotPresent := false
 	for _, c := range src {
+		if c == '-' {
+			if count > 0 {
+				break
+			}
+			count += 1
+			continue
+		}
 		// Allow for single dot
 		if c == '.' {
 			if dotPresent {

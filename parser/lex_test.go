@@ -35,7 +35,7 @@ func TestLexDigits(t *testing.T) {
 		t.Fatalf("Should be 12.34: %s", d)
 	}
 
-	d = lexDigits("23 1")
+	d = lexDigits("23-1")
 	if d != "23" {
 		t.Fatalf("Should be 23: %s", d)
 	}
@@ -48,6 +48,11 @@ func TestLexDigits(t *testing.T) {
 	d = lexDigits(" 1")
 	if d != "" {
 		t.Fatalf("Should be empty: %s", d)
+	}
+
+	d = lexDigits("-44.38")
+	if d != "-44.38" {
+		t.Fatalf("Wrong: %s", d)
 	}
 }
 
