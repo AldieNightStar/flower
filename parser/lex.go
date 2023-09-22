@@ -12,6 +12,7 @@ var SPACES_EOL = SPACES + EOL
 var SYMBOLS = "~!@#$%^&*_+-=[]{}<>';\":\\/`,.?"
 var SPACES_SYMBOLS = SPACES + SYMBOLS
 var SPACES_SYMBOLS_BRACKETS = SPACES + SYMBOLS + "()"
+var SPACES_SYMBOLS_BRACKETS_EOL = SPACES + SYMBOLS + "()" + EOL
 var DIGIT = "01234567890"
 var QUOTES = "\"'`"
 
@@ -101,7 +102,7 @@ func lexWord(src string) string {
 				break
 			}
 		}
-		if strings.Contains(SPACES_SYMBOLS_BRACKETS, string(c)) {
+		if strings.Contains(SPACES_SYMBOLS_BRACKETS_EOL, string(c)) {
 			break
 		}
 		count += 1

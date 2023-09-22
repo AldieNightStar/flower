@@ -32,6 +32,34 @@ func TestLex(t *testing.T) {
 	}
 }
 
+func TestLexLines(t *testing.T) {
+	toks := Lex("file", "w1\nw2\n\nw4")
+
+	if len(toks) < 5 {
+		t.Fatalf("Len should be 5: %d", len(toks))
+	}
+
+	if toks[0].Info != "file:1" {
+		t.Fatalf("Wrong: %s", toks[0].Info)
+	}
+	if toks[2].Info != "file:2" {
+		t.Fatalf("Wrong: %s", toks[2].Info)
+	}
+	if toks[4].Info != "file:4" {
+		t.Fatalf("Wrong: %s", toks[4].Info)
+	}
+
+	if toks[0].Value != "w1" {
+		t.Fatalf("Wrong: %s", toks[0].Value)
+	}
+	if toks[2].Value != "w2" {
+		t.Fatalf("Wrong: %s", toks[2].Value)
+	}
+	if toks[4].Value != "w4" {
+		t.Fatalf("Wrong: %s", toks[4].Value)
+	}
+}
+
 func TestLexOne(t *testing.T) {
 	tok := lexOne("word  :atom -12.44 'Hello'", "", 1)
 
