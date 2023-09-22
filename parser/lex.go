@@ -15,14 +15,18 @@ var SPACES_SYMBOLS_BRACKETS = SPACES + SYMBOLS + "()"
 var DIGIT = "01234567890"
 var QUOTES = "\"'`"
 
-func Lex(src string) []*Token {
+func Lex(fileName, src string) []*Token {
 	var tokens []*Token
 
+	line := 1
 	pos := 0
 	for {
-		tok := lexOne(util.SliceFrom(src, pos))
+		tok := lexOne(util.SliceFrom(src, pos), fileName, line)
 		if tok == nil {
 			break
+		}
+		if tok.Type == TOK_SPACE {
+			line += takeEols(tok.Value)
 		}
 		tokens = append(tokens, tok)
 		pos += len(tok.Value)
@@ -31,52 +35,52 @@ func Lex(src string) []*Token {
 	return tokens
 }
 
-func lexOne(src string) *Token {
+func lexOne(src string, fileName string, line int) *Token {
 	var res string
 
 	res = lexSpaces(src)
 	if len(res) > 0 {
-		return NewToken(TOK_SPACE, res)
+		return NewToken(TOK_SPACE, res, fileName, line)
 	}
 
 	res = lexDigits(src)
 	if len(res) > 0 {
-		return NewToken(TOK_NUMBER, res)
+		return NewToken(TOK_NUMBER, res, fileName, line)
 	}
 
 	res = lexPathString(src)
 	if len(res) > 0 {
-		return NewToken(TOK_PATH, res)
+		return NewToken(TOK_PATH, res, fileName, line)
 	}
 
 	res = lexWord(src)
 	if len(res) > 0 {
-		return NewToken(TOK_WORD, res)
+		return NewToken(TOK_WORD, res, fileName, line)
 	}
 
 	res = lexString(src)
 	if len(res) > 0 {
-		return NewToken(TOK_STRING, res)
+		return NewToken(TOK_STRING, res, fileName, line)
 	}
 
 	res = lexBracket(src)
 	if len(res) > 0 {
-		return NewToken(TOK_BRACKET, res)
+		return NewToken(TOK_BRACKET, res, fileName, line)
 	}
 
 	res = lexColonString(src)
 	if len(res) > 0 {
-		return NewToken(TOK_ATOM, res)
+		return NewToken(TOK_ATOM, res, fileName, line)
 	}
 
 	res = lexCommentString(src)
 	if len(res) > 0 {
-		return NewToken(TOK_COMMENT, res)
+		return NewToken(TOK_COMMENT, res, fileName, line)
 	}
 
 	res = lexSymbols(src)
 	if len(res) > 0 {
-		return NewToken(TOK_SYMBOLS, res)
+		return NewToken(TOK_SYMBOLS, res, fileName, line)
 	}
 
 	return nil

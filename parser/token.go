@@ -1,5 +1,7 @@
 package parser
 
+import "fmt"
+
 type TokenType uint8
 
 const (
@@ -16,10 +18,15 @@ const (
 )
 
 type Token struct {
+	Info  string
 	Type  TokenType
 	Value string
 }
 
-func NewToken(t TokenType, value string) *Token {
-	return &Token{t, value}
+func NewToken(t TokenType, value string, fileName string, line int) *Token {
+	return &Token{
+		Info:  fmt.Sprintf("%s:%d", fileName, line),
+		Type:  t,
+		Value: value,
+	}
 }

@@ -3,7 +3,7 @@ package parser
 import "testing"
 
 func TestLex(t *testing.T) {
-	toks := Lex("word  :atom -12.44 'Hello'")
+	toks := Lex("", "word  :atom -12.44 'Hello'")
 
 	if len(toks) != 7 {
 		t.Fatalf("Wrong len: %d", len(toks))
@@ -33,7 +33,7 @@ func TestLex(t *testing.T) {
 }
 
 func TestLexOne(t *testing.T) {
-	tok := lexOne("word  :atom -12.44 'Hello'")
+	tok := lexOne("word  :atom -12.44 'Hello'", "", 1)
 
 	if tok == nil {
 		t.Fatal("nil")
