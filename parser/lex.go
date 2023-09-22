@@ -20,7 +20,7 @@ func Lex(src string) []*Token {
 
 	pos := 0
 	for {
-		tok := lexOne(src[pos:])
+		tok := lexOne(util.SliceFrom(src, pos))
 		if tok == nil {
 			break
 		}
@@ -45,7 +45,7 @@ func lexOne(src string) *Token {
 	}
 
 	res = lexPathString(src)
-	if len(src) > 0 {
+	if len(res) > 0 {
 		return NewToken(TOK_PATH, res)
 	}
 
@@ -147,7 +147,7 @@ func lexSymbols(src string) string {
 }
 
 func lexBracket(src string) string {
-	c := src[0:1]
+	c := util.SliceOf(src, 0, 1)
 	if c == "(" || c == ")" {
 		return c
 	}
@@ -176,13 +176,13 @@ func takeEols(s string) int {
 }
 
 func lexString(s string) string {
-	if !strings.Contains(QUOTES, s[0:1]) {
+	if !strings.Contains(QUOTES, util.SliceOf(s, 0, 1)) {
 		return ""
 	}
-	q := rune(s[0])
+	q := rune(util.StringAt(s, 0))
 	count := 1
 	escaped := false
-	for _, c := range s[1:] {
+	for _, c := range util.SliceFrom(s, 1) {
 		if escaped {
 			escaped = false
 			count += 1
@@ -199,11 +199,11 @@ func lexString(s string) string {
 		}
 		count += 1
 	}
-	return s[0:count]
+	return util.SliceOf(s, 0, count)
 }
 
 func lexColonString(s string) string {
-	if s[0] != ':' {
+	if util.StringAt(s, 0) != ':' {
 		return ""
 	}
 	count := 1 + len(lexWord(s[1:]))
@@ -214,7 +214,7 @@ func lexColonString(s string) string {
 }
 
 func lexCommentString(s string) string {
-	if s[0] != ';' {
+	if util.StringAt(s, 0) != ';' {
 		return ""
 	}
 	count := 1

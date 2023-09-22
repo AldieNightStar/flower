@@ -2,6 +2,52 @@ package parser
 
 import "testing"
 
+func TestLex(t *testing.T) {
+	toks := Lex("word  :atom -12.44 'Hello'")
+
+	if len(toks) != 7 {
+		t.Fatalf("Wrong len: %d", len(toks))
+	}
+
+	if toks[0].Type != TOK_WORD {
+		t.Fatalf("Wrong type")
+	}
+	if toks[1].Type != TOK_SPACE {
+		t.Fatalf("Wrong type")
+	}
+	if toks[2].Type != TOK_ATOM {
+		t.Fatalf("Wrong type")
+	}
+	if toks[3].Type != TOK_SPACE {
+		t.Fatalf("Wrong type")
+	}
+	if toks[4].Type != TOK_NUMBER {
+		t.Fatalf("Wrong type")
+	}
+	if toks[5].Type != TOK_SPACE {
+		t.Fatalf("Wrong type")
+	}
+	if toks[6].Type != TOK_STRING {
+		t.Fatalf("Wrong type")
+	}
+}
+
+func TestLexOne(t *testing.T) {
+	tok := lexOne("word  :atom -12.44 'Hello'")
+
+	if tok == nil {
+		t.Fatal("nil")
+	}
+
+	if tok.Type != TOK_WORD {
+		t.Fatalf("Not word: %d", tok.Type)
+	}
+
+	if tok.Value != "word" {
+		t.Fatalf("Not word: %s", tok.Value)
+	}
+}
+
 func TestLexWord(t *testing.T) {
 	w := lexWord("this ")
 	if w != "this" {
@@ -164,6 +210,11 @@ func TestPathString(t *testing.T) {
 	p := lexPathString("a.b.c")
 	if p != "a.b.c" {
 		t.Fatalf("Not correct: %s", p)
+	}
+
+	p = lexPathString("word and all")
+	if p != "" {
+		t.Fatalf("Should be empty: %s", p)
 	}
 
 	p = lexPathString("a.c==")
