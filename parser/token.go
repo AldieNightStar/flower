@@ -15,7 +15,6 @@ const (
 	TOK_BRACKET
 	TOK_PATH
 	TOK_COMMENT
-	TOK_NODE
 )
 
 type Token struct {

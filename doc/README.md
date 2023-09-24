@@ -9,3 +9,10 @@
 * `dict` - Dictionary
 * `func` - Function
 * `atom` - Atom Value (String alternative). Used for calls and other programming stuff
+
+## Tech contents
+
+* Syntax Tree
+    * [Lex & Parse](LexParse.md)
+    * [Token](Token.md)
+    * [Node](Node.md)
