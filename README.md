@@ -8,6 +8,7 @@
 
 
 ## Idea
+* [More sample here](doc/samples/README.md)
 ```clojure
 (use sys.console c)
 
@@ -26,38 +27,6 @@
     (c.log it.a)
     (c.log it.b)
     (c.log it.c)
-)
-```
-* Some logic:
-```clojure
-(use sys.console c)
-
-; Show EQUAL if a same == b
-(if (= a b)
-    (c.log "EQUAL")
-    (c.log "NOT EQUAL")
-)
-
-; Let's use 'case'
-(case a
-    (= b) (c.log "EQUAL TO B")
-    (= c) (c.log "EQUAL TO C")
-    (= d) (c.log "EQUAL TO D")
-    else  (c.log "NOT EQUAL" )
-)
-```
-* Types
-```clojure
-(use sys.console c)
-
-(type User
-    (name str)
-    (age int)
-    (def is-young () (>= age 18))
-)
-
-(interface YoungChecker
-    (is-young () bool)
 )
 ```
 
