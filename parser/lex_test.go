@@ -259,4 +259,9 @@ func TestPathString(t *testing.T) {
 	if p != "" {
 		t.Fatalf("Should be empty: %s", p)
 	}
+
+	p = lexPathString("a..b")
+	if p != "" {
+		t.Fatalf("Should be empty: %s", p)
+	}
 }

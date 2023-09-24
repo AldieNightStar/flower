@@ -244,12 +244,17 @@ func lexPathString(s string) string {
 		if util.SliceOf(s, count, count+1) != "." {
 			break
 		} else {
-			count += 1
+			// Do not allow for .. dots together
+			if delta > 0 {
+				count += 1
+			} else {
+				break
+			}
 		}
 	}
 	result := util.SliceOf(s, 0, count)
 	if strings.Count(result, ".") > 0 {
-		// If last dot is present then it's incorrect
+		// If last dot is present then we return ""
 		if strings.LastIndex(result, ".") == len(result)-1 {
 			return ""
 		}
