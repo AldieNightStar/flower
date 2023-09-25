@@ -15,4 +15,7 @@
 * Syntax Tree
     * [Lex & Parse](LexParse.md)
     * [Token](Token.md)
+    * [Path Token](PathToken.md)
+    * [String Token](StringToken.md)
     * [Node](Node.md)
+    

@@ -49,9 +49,5 @@ const (
     // Path token 
     // Example:  test.abc.trigger
 	TOK_PATH
-
-    // Comment string
-    // Example:  ; This is comment until \n
-	TOK_COMMENT
 )
 ```

@@ -7,9 +7,11 @@ import (
 func Parse(tokens []*Token) ([]*Node, error) {
 	nodeStack := []*Node{NewChildrenNode()}
 	for _, tok := range tokens {
-		if tok.Type == TOK_SPACE {
+		// Some token types are going to be skipped
+		if tok.Type == TOK_SPACE || tok.Type == TOK_COMMENT {
 			continue
 		}
+
 		if tok.Type == TOK_BRACKET {
 			if tok.Value == "(" {
 				nodeStack = append(nodeStack, NewChildrenNode())
