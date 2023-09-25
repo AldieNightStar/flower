@@ -17,10 +17,16 @@ func (self *Container) Info() string {
 
 func (self *Container) String() string {
 	sb := []string{}
+	first := true
 	for _, exp := range self.children {
-		sb = append(sb, util.Tabulate(exp.String()))
+		if first {
+			sb = append(sb, exp.String())
+			first = false
+		} else {
+			sb = append(sb, util.Tabulate(exp.String()))
+		}
 	}
-	return "Container:\n" + strings.Join(sb, "\n")
+	return "(" + strings.Join(sb, "\n") + "\n"
 }
 
 func (self *Container) Children() []Expression {
