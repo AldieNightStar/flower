@@ -9,6 +9,7 @@ if node.IsValue() {
     if node.Token.Type == TOK_PATH {
 
         // Use this function
+        // It will return []string
         path := ReadPath(node.Token.Value)
 
         // You will have something like this:
