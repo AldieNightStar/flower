@@ -43,6 +43,10 @@ func (this *Env) CallFunc(e Expression, args []Expression) (Expression, error) {
 	return nil, errors.New("Not a function")
 }
 
+func (this *Env) SetFunc(name string, fn ExpFunc) {
+	this.Scope[name] = NewFuncExpression("native", fn)
+}
+
 func (this *Env) EvalAll(expressions []Expression) (res []Expression, err error) {
 	for _, exp := range expressions {
 		r, err := this.Eval(exp)

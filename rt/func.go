@@ -7,6 +7,13 @@ type FuncExpression struct {
 	fn   ExpFunc
 }
 
+func NewFuncExpression(info string, fn ExpFunc) *FuncExpression {
+	return &FuncExpression{
+		info: info,
+		fn:   fn,
+	}
+}
+
 func (self *FuncExpression) String() string {
 	return "(func ...)"
 }
