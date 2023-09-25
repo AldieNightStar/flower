@@ -49,3 +49,8 @@ type ExpressionWord interface {
 	Expression
 	Word() string
 }
+
+type ExpressionFunction interface {
+	Expression
+	Call([]Expression) (Expression, error)
+}
