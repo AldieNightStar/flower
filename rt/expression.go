@@ -52,5 +52,5 @@ type ExpressionWord interface {
 
 type ExpressionFunction interface {
 	Expression
-	Call([]Expression) (Expression, error)
+	Call(*Env, []Expression) (Expression, error)
 }

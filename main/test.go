@@ -9,7 +9,7 @@ import (
 
 func main() {
 	env := flower.NewEnv(nil)
-	env.SetFunc("print", rt.ExpFunc(func(args []rt.Expression) (rt.Expression, error) {
+	env.SetFunc("print", rt.ExpFunc(func(env *rt.Env, args []rt.Expression) (rt.Expression, error) {
 		r, err := env.EvalAll(args)
 		if err != nil {
 			fmt.Println(err)

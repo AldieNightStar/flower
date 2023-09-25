@@ -1,6 +1,6 @@
 package rt
 
-type ExpFunc func(args []Expression) (Expression, error)
+type ExpFunc func(env *Env, args []Expression) (Expression, error)
 
 type FuncExpression struct {
 	info string
@@ -22,6 +22,6 @@ func (self *FuncExpression) Info() string {
 	return self.info
 }
 
-func (self *FuncExpression) Call(args []Expression) (Expression, error) {
-	return self.fn(args)
+func (self *FuncExpression) Call(env *Env, args []Expression) (Expression, error) {
+	return self.fn(env, args)
 }

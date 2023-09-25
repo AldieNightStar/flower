@@ -38,7 +38,7 @@ func (this *Env) Set(name string, e Expression) Expression {
 func (this *Env) CallFunc(e Expression, args []Expression) (Expression, error) {
 	f, isFunc := e.(ExpressionFunction)
 	if isFunc {
-		return f.Call(args)
+		return f.Call(this, args)
 	}
 	return nil, errors.New("Not a function")
 }
