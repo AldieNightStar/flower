@@ -1,5 +1,11 @@
 package util
 
+import "strings"
+
+func Tabulate(s string) string {
+	return "\t" + strings.ReplaceAll(s, "\n", "\n\t")
+}
+
 func SliceOf(s string, start, end int) string {
 	if len(s) < 1 {
 		return ""

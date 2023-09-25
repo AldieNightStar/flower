@@ -1,4 +1,4 @@
-# Path words
+# Path token
 
 * Some tokens like `TOK_PATH` has value like `abc.def.ghi` which need to be parsed to retreive the path
 
