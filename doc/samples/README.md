@@ -2,6 +2,7 @@
 
 * Core
     * [Variables](Variables.md)
+    * [Variable Scopes](VariableScopes.md)
     * [Logic](Logic.md)
     * [Types](Types.md)
 * Errors Handlers
