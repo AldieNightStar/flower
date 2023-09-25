@@ -56,3 +56,15 @@ func ConvertRuntime(node *parser.Node) (rt.Expression, error) {
 	}
 	return rt.NONE, nil
 }
+
+func ConvertRuntimeAll(nodes []*parser.Node) ([]rt.Expression, error) {
+	arr := []rt.Expression{}
+	for _, node := range nodes {
+		e, err := ConvertRuntime(node)
+		if err != nil {
+			return nil, err
+		}
+		arr = append(arr, e)
+	}
+	return arr, nil
+}
