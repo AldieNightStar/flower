@@ -26,7 +26,7 @@ func (self *Container) String() string {
 			sb = append(sb, util.Tabulate(exp.String()))
 		}
 	}
-	return "(" + strings.Join(sb, "\n") + "\n"
+	return "(" + strings.Join(sb, "\n") + ")"
 }
 
 func (self *Container) Children() []Expression {
