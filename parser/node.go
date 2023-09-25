@@ -8,7 +8,7 @@ type Node struct {
 func NewTokenNode(token *Token) *Node {
 	return &Node{
 		Token:    token,
-		Children: []*Node{},
+		Children: nil,
 	}
 }
 
