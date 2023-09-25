@@ -25,30 +25,30 @@ token.Type
 const (
     // Number token
     // Example: 123  -398  12.44
-	TOK_NUMBER
+    TOK_NUMBER
 
     // String token
     // Example: "Hello there" 'hi' `string`
-	TOK_STRING
+    TOK_STRING
 
     // Symbols token
     // Example:  %%==> 
-	TOK_SYMBOLS
+    TOK_SYMBOLS
 
     // Atom tokens
     // Example:  :key  :value  :reset
-	TOK_ATOM
+    TOK_ATOM
 
     // Word tokens
     // Example:  variable   step  abc
-	TOK_WORD
+    TOK_WORD
 
     // Bracket tokens
     // Example:  (  )
-	TOK_BRACKET
+    TOK_BRACKET
 
     // Path token 
     // Example:  test.abc.trigger
-	TOK_PATH
+    TOK_PATH
 )
 ```
