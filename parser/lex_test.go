@@ -101,6 +101,17 @@ func TestLexWord(t *testing.T) {
 	if w != "" {
 		t.Fatal("Should be empty")
 	}
+
+	w = lexWord("nil?")
+	if w != "nil?" {
+		t.Fatalf("Wrong: %s", w)
+	}
+
+	w = lexWord("?xyz")
+	if w != "" {
+		t.Fatal("Should be empty")
+	}
+
 }
 
 func TestLexDigits(t *testing.T) {

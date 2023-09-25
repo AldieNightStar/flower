@@ -90,6 +90,10 @@ func lexOne(src string, fileName string, line int) *Token {
 func lexWord(src string) string {
 	count := 0
 	for _, c := range src {
+		if c == '?' && count > 0 {
+			count += 1
+			continue
+		}
 		if c == '$' || c == '_' {
 			count += 1
 			continue
