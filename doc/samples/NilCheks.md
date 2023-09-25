@@ -14,9 +14,9 @@
 ## Hand checks
 ```clojure
 ; Returns true if value is nil
-(is-nil user)
+(nil? user)
 
 ; Returns true if value is NOT nil
-(is-not-nil user)
+(not-nil? user)
 ```
 
