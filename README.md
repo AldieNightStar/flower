@@ -1,5 +1,7 @@
 # Flower
 
+* ⚠️ __This project is Work in Progress and not done to be used by someone__
+
 ## Overview
 
 * Lisp based programming language
