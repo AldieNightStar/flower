@@ -20,6 +20,7 @@ token.Type
 
 ## Token Types
 * Token type is `TokenType` (`uint8` value)
+* Some is not documented as you would not use them
 ```go
 const (
     // Number token
