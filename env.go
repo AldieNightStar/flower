@@ -36,8 +36,8 @@ func (this *Env) Set(name string, v Value) Value {
 }
 
 func (this *Env) CallFunc(v Value, args []Value) (Value, error) {
-	isFunc, f := GetFuncValue(v)
-	if isFunc {
+	f := GetFuncValue(v)
+	if f != nil {
 		return f.Func(this, args)
 	}
 	return nil, errors.New("Not a function")

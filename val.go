@@ -151,12 +151,12 @@ func (this *FuncValue) String() string {
 	return "FUNC"
 }
 
-func GetFuncValue(v Value) (ok bool, f *FuncValue) {
+func GetFuncValue(v Value) (f *FuncValue) {
 	fun, isFunc := v.(*FuncValue)
 	if !isFunc {
-		return false, nil
+		return nil
 	}
-	return true, fun
+	return fun
 }
 
 func NewFuncValue(f FuncType) *FuncValue {
