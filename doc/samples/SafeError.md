@@ -47,10 +47,10 @@
 )
 
 ; Shorter example
-(safed-by handler (call-suspicious-api 1 2 3))
+(safe-by handler (call-suspicious-api 1 2 3))
 
 ; Longer example
-(with a (safed-by handler (call-suspicious-api 1 2 3))
+(with a (safe-by handler (call-suspicious-api 1 2 3))
     ; 'handler' is called with an error before this block
     ; Only then this block will be called and 'a' will be nil
 
