@@ -8,6 +8,9 @@
 * `list` - list of elements
 * `map` - map by element
 
+
+
+
 ## New Type
 ```clojure
 (use sys.console c)
@@ -32,14 +35,21 @@
 (map :key "value")
 (map "key" "value") ; the same
 (map key "value") ; using key from the variable
+
+; Check that variable is of 'map' type
+; Returns true if variable is map
+(map? val)
 ```
 
 
-## Array Type
+## List Type
 ```clojure
 (list 10 20 30 40)
 
 ; Some operation
 ; Each operation creates new list
 (list.add (list 10 20) 30) ; (list 10 20 30)
+
+; Check that value is list
+(list? val)
 ```

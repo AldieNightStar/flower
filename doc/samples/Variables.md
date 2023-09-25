@@ -19,12 +19,9 @@
 
 
 
-## `let` command
+## `set` command
 ```clojure
-; 'let' allows you initialize couple of mutable variables
-(let (a 10 b 20 c 30)
-    (c.log a)
-    (c.log b)
-    (c.log c)
-)
+; Set variable in the current scope
+; Scope lives until code is ended
+(set a 10)
 ```
