@@ -5,8 +5,11 @@ import (
 	"github.com/AldieNightStar/flower/rt"
 )
 
-func EvalString(filename string, src string) (rt.Expression, error) {
-	env := rt.NewEnv(nil)
+func NewEnv(parent *rt.Env) *rt.Env {
+	return rt.NewEnv(parent)
+}
+
+func EvalString(env *rt.Env, filename string, src string) (rt.Expression, error) {
 	nodes, err := parser.Parse(parser.Lex(filename, src))
 	if err != nil {
 		return nil, err
@@ -25,5 +28,6 @@ func EvalString(filename string, src string) (rt.Expression, error) {
 	if len(results) < 0 {
 		return rt.NONE, nil
 	}
+
 	return results[len(results)-1], nil
 }

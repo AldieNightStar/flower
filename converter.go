@@ -21,7 +21,7 @@ func ConvertRuntime(node *parser.Node) (rt.Expression, error) {
 		}
 
 		// TODO add info
-		rt.NewContainer("", children)
+		return rt.NewContainer("", children), nil
 	} else if node.IsValue() {
 		t := node.Token.Type
 		if t == parser.TOK_NONE {
