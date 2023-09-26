@@ -6,7 +6,9 @@ import (
 )
 
 func NewEnv(parent *rt.Env) *rt.Env {
-	return rt.NewEnv(parent)
+	var env = rt.NewEnv(parent)
+	rt.AddStdLib(env)
+	return env
 }
 
 func EvalString(env *rt.Env, filename string, src string) (rt.Expression, error) {

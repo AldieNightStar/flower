@@ -62,10 +62,17 @@ func (this *Env) Eval(e Expression) (Expression, error) {
 	if e == NONE {
 		return NONE, nil
 	}
+
 	// Words take values if there are
 	word, isWord := e.(ExpressionWord)
 	if isWord {
 		return this.Get(word.Word()), nil
+	}
+
+	// Symbols take values if there are
+	symb, isSym := e.(ExpressionSymbols)
+	if isSym {
+		return this.Get(symb.Symbols()), nil
 	}
 
 	// TODO add path words support
