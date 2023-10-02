@@ -6,7 +6,7 @@ type Variable interface {
 
 type VariableMut interface {
 	Variable
-	SetValue() Expression
+	SetValue(Expression) Expression
 }
 
 // ===================
