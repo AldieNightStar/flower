@@ -3,6 +3,7 @@ package flower
 import (
 	"github.com/AldieNightStar/flower/parser"
 	"github.com/AldieNightStar/flower/rt"
+	"github.com/AldieNightStar/flower/util"
 )
 
 func NewEnv(parent *rt.Env) *rt.Env {
@@ -32,4 +33,12 @@ func EvalString(env *rt.Env, filename string, src string) (rt.Expression, error)
 	}
 
 	return results[len(results)-1], nil
+}
+
+func EvalFile(env *rt.Env, filename string) (rt.Expression, error) {
+	fileSrc, err := util.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+	return EvalString(env, filename, fileSrc)
 }

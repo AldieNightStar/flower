@@ -7,9 +7,8 @@ func stdlibPrint(env *Env, args []Expression) (Expression, error) {
 	if err != nil {
 		return NONE, err
 	}
-	fmt.Println(all)
-	if len(all) > 0 {
-		return all[len(all)-1], nil
+	for _, element := range all {
+		fmt.Println(element)
 	}
 	return NONE, nil
 }
