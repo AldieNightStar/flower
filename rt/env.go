@@ -58,6 +58,28 @@ func (this *Env) EvalAll(expressions []Expression) (res []Expression, err error)
 	return res, nil
 }
 
+func (this *Env) EvalPath(pathExp ExpressionPath) (res Expression, err error) {
+	path := pathExp.Path()
+	var e Expression
+	for id, name := range path {
+		if id < 1 {
+			// If this is the first time then we take it from ENV
+			e = this.Get(name)
+		} else {
+			// Next time we should take from inner values
+			if e == NONE {
+				return nil, errors.New("none can't have any attribute")
+			}
+			attr, ok := e.(ExpressionAttributer)
+			if !ok {
+				return nil, errors.New(e.String() + ": Has no attributes inside")
+			}
+			e = attr.GetAttribute(name)
+		}
+	}
+	return e, nil
+}
+
 func (this *Env) Eval(e Expression) (Expression, error) {
 	if e == NONE {
 		return NONE, nil
@@ -75,6 +97,10 @@ func (this *Env) Eval(e Expression) (Expression, error) {
 		return this.Get(symb.Symbols()), nil
 	}
 
+	path, isPath := e.(ExpressionPath)
+	if isPath {
+		return this.EvalPath(path)
+	}
 	// TODO add path words support
 	// ...
 
