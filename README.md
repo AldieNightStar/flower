@@ -4,7 +4,7 @@
 
 ## Overview
 
-* Lisp based programming language
+* Programming language that looks like lisp, but not LISP :)
 * `Code is data` in mind
 * ⚠️It's not the same as __LISP__ and it's __NOT__ a dialect. It's completely different language
 
