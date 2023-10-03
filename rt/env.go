@@ -97,12 +97,11 @@ func (this *Env) Eval(e Expression) (Expression, error) {
 		return this.Get(symb.Symbols()), nil
 	}
 
+	// Path parameters
 	path, isPath := e.(ExpressionPath)
 	if isPath {
 		return this.EvalPath(path)
 	}
-	// TODO add path words support
-	// ...
 
 	// If this is container then eval it
 	container, isContainer := e.(ExpressionContainer)
@@ -113,7 +112,7 @@ func (this *Env) Eval(e Expression) (Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		// TODO Function need to know whos is callee
+		// TODO Function need to know who is callee
 		return this.CallFunc(head, tail)
 	}
 	return e, nil
